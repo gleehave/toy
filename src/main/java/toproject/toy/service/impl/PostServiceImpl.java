@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import toproject.toy.dto.PostDto;
 import toproject.toy.entity.Post;
+import toproject.toy.exception.ResourceNotFoundException;
 import toproject.toy.repository.PostRepository;
 import toproject.toy.service.PostService;
 
@@ -33,6 +34,13 @@ public class PostServiceImpl implements PostService {
     public List<PostDto> getAllPosts() {
         List<Post> posts = postRepository.findAll();
         return posts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+    }
+
+    @Override
+    public PostDto getPostById(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+        return mapToDTO(post);
     }
 
     //Entity to DTO
