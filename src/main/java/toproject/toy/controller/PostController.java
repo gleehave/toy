@@ -1,5 +1,6 @@
 package toproject.toy.controller;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,11 @@ public class PostController {
     @GetMapping("/{id}")
     public ResponseEntity<PostDto> getPostById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getPostById(id));
+    }
+
+    @PutMapping("/{id}/update")
+    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
+        PostDto postResponse= postService.updatePost(postDto, id);
+        return new ResponseEntity<>(postResponse, HttpStatus.OK);
     }
 }
