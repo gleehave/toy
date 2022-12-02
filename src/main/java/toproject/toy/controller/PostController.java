@@ -1,11 +1,9 @@
 package toproject.toy.controller;
 
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toproject.toy.dto.PostDto;
-import toproject.toy.entity.Post;
 import toproject.toy.service.PostService;
 
 import java.util.List;
@@ -25,8 +23,9 @@ public class PostController {
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto) {
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
+
     @GetMapping("/list")
-    public List<PostDto> getAllPosts(){
+    public List<PostDto> getAllPosts() {
         return postService.getAllPosts();
     }
 
@@ -37,7 +36,13 @@ public class PostController {
 
     @PutMapping("/{id}/update")
     public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
-        PostDto postResponse= postService.updatePost(postDto, id);
+        PostDto postResponse = postService.updatePost(postDto, id);
         return new ResponseEntity<>(postResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable(name = "id") Long id) {
+        postService.deletePostById(id);
+        return new ResponseEntity<>("Post entity deleted Sucessfully", HttpStatus.OK);
     }
 }
