@@ -46,15 +46,23 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto getCommentById(Long postId, Long commentId) {
         Post post = postRepository.findById(postId).orElseThrow(
-                () -> new ResourceNotFoundException("post", "id", postId)
-        );
+                () -> new ResourceNotFoundException("post", "id", postId));
 
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new ResourceNotFoundException("comment", "id", commentId));
+
         if (!comment.getPost().getId().equals(post.getId())) {
             throw new BlogAPIException(HttpStatus.BAD_REQUEST, "Comment does not belong to post");
         }
         return mapToDto(comment);
+    }
+
+    @Override
+    public CommentDto updateComment(Long postId, Long commentId, CommentDto commentDto) {
+        Post post = postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("post", "id", postId));
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("comment", "id", commentId));
     }
 
     private CommentDto mapToDto(Comment comment) {
