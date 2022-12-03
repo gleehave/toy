@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import toproject.toy.dto.CommentDto;
 import toproject.toy.service.CommentService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/")
 public class CommentController {
@@ -21,5 +23,10 @@ public class CommentController {
                                                     @RequestBody CommentDto commentDto) {
 
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/posts/{postId}/comments")
+    public List<CommentDto> getCommentsByPostId(@PathVariable(value = "postId") Long postId) {
+        return commentService.getCommentsByPostId(postId);
     }
 }

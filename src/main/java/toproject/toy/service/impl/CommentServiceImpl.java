@@ -10,6 +10,9 @@ import toproject.toy.repository.CommentRepository;
 import toproject.toy.repository.PostRepository;
 import toproject.toy.service.CommentService;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -31,6 +34,12 @@ public class CommentServiceImpl implements CommentService {
         return mapToDto(newComment);
     }
 
+    @Override
+    public List<CommentDto> getCommentsByPostId(Long postId) {
+        List<Comment> comments = commentRepository.findByPostId(postId);
+
+        return comments.stream().map(comment -> mapToDto(comment)).collect(Collectors.toList());
+    }
 
     private CommentDto mapToDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
