@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import toproject.toy.dto.PostDto;
 import toproject.toy.service.PostService;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -25,8 +26,9 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public List<PostDto> getAllPosts() {
-        return postService.getAllPosts();
+    public List<PostDto> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                     @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+        return postService.getAllPosts(pageNo, pageSize);
     }
 
     @GetMapping("/{id}")

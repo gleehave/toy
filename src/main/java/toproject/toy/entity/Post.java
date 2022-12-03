@@ -20,7 +20,7 @@ public class Post {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name = "descriptoin", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "content", nullable = false)
