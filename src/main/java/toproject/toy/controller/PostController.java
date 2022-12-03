@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import toproject.toy.dto.PostDto;
+import toproject.toy.dto.PostResponse;
 import toproject.toy.service.PostService;
 
 import javax.websocket.server.PathParam;
@@ -26,8 +27,8 @@ public class PostController {
     }
 
     @GetMapping("/list")
-    public List<PostDto> getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-                                     @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
+    public PostResponse getAllPosts(@RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+                                    @RequestParam(value = "pageSize", defaultValue = "10", required = false) int pageSize) {
         return postService.getAllPosts(pageNo, pageSize);
     }
 

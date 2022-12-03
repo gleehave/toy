@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import toproject.toy.dto.PostDto;
+import toproject.toy.dto.PostResponse;
 import toproject.toy.entity.Post;
 import toproject.toy.exception.ResourceNotFoundException;
 import toproject.toy.repository.PostRepository;
@@ -34,15 +35,27 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<PostDto> getAllPosts(int pageNo, int pageSize) {
+    public PostResponse getAllPosts(int pageNo, int pageSize) {
         //create pageable instance
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         Page<Post> posts = postRepository.findAll(pageable);
 
         //get content for page object
         List<Post> listOfPosts = posts.getContent();
+        List<PostDto> content = listOfPosts.stream()
+                .map(post -> mapToDTO(post))
+                .collect(Collectors.toList());
 
-        return listOfPosts.stream().map(post -> mapToDTO(post)).collect(Collectors.toList());
+        PostResponse postResponse = new PostResponse();
+
+        postResponse.setContent(content);
+        postResponse.setPageNo(posts.getNumber());
+        postResponse.setPageSize(posts.getSize());
+        postResponse.setTotalElements(posts.getTotalElements());
+        postResponse.setTotalPages(posts.getTotalPages());
+        postResponse.setLast(posts.isLast());
+
+        return postResponse;
     }
 
     @Override
