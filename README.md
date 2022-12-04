@@ -381,6 +381,7 @@ public ResponseEntity<ErrorDetails> handleResourceNotFoundException(ResourceNotF
 - 즉, 스프링시큐리티 사용을 위한 어노테이션선언 정도로 생각하면 된다.
 <img width="526" alt="스크린샷 2022-12-04 오후 5 04 20" src="https://user-images.githubusercontent.com/91510831/205480483-e14ceac7-b008-44ca-ba51-4a741e8c59f0.png">
 https://devuna.tistory.com/59 (참고)
+
 - hasRole(), hasAnyAuthority() : 특정 권한을 가지는 사용자만 접근할 수 있다.
 - hasAuthority(), hasAnyAuthority() : 특정 권한을 가지는 사용자만 접근할 수 있다.
 - hasIpAddress() : 특정 IP주소를 가지는 사용자만 접근할 수 있다.
