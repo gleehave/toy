@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import toproject.toy.dto.JWTAuthResponse;
 import toproject.toy.dto.LoginDto;
 import toproject.toy.dto.SignUpDto;
 import toproject.toy.entity.Role;
 import toproject.toy.entity.User;
 import toproject.toy.repository.RoleRepository;
 import toproject.toy.repository.UserRepository;
+import toproject.toy.security.JwtTokenProvider;
 
 import java.util.Collections;
 
@@ -36,14 +38,20 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtTokenProvider tokenProvider;
+
     @PostMapping("/signin")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginDto.getUsernameOrEmail(), loginDto.getPassword())
         );
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        return new ResponseEntity<>("User signed-in successfully!", HttpStatus.OK);
+
+        //get token form tokenProvider
+        String token = tokenProvider.generateToken(authentication);
+
+        return ResponseEntity.ok(new JWTAuthResponse(token));
     }
 
     @PostMapping("/signup")
