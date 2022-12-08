@@ -389,3 +389,11 @@ https://devuna.tistory.com/59 (참고)
 - rememberMe() : 로그인한 사용자만 접근할 수 있다.
 - anonymous() : 인증되지 않은 사용자가 접근할 수 있다.
 - authenticated() : 인증된 사용자만 접근할 수 있다.
+
+## Spring Security
+- Authentication (인증)
+- Authroization (인가)
+- Principal (접근 주체) : 보호받는 Resource에 접근하는 대상
+- Credential (비밀번호) : Resource에 접근하는 대상의 비밀번호
+
+이미지 (첨부)
