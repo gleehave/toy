@@ -20,6 +20,6 @@ public class Member {
     private String street;
     private String zipcode;
 
-    @OneToMany(mappedBy = "orders")
+    @OneToMany(mappedBy = "order")
     private List<Order> orders = new ArrayList<Order>();
 }
